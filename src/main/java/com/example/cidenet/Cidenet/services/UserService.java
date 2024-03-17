@@ -6,6 +6,7 @@ import com.example.cidenet.Cidenet.exceptions.MyException;
 import com.example.cidenet.Cidenet.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -24,6 +25,8 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
+    public UserService() {
+    }
     //Transactional indica que el sgte metodo es transaccional, si ocurre un error mientras se está ejecutando, automaticamente
     //se hace un rollback y no se modifica la base de datos.
 

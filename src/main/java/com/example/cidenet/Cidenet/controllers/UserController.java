@@ -21,12 +21,9 @@ import java.util.logging.Logger;
 @RequestMapping("/users") //Localhost/users
 public class UserController {
 
+    //Autowired se encarga de 'inyectar' la dependencia userRepo (dependencia como una porción de codigo que voy a poder volver a utilizar)
     @Autowired
     UserService userService;
-
-    @Autowired
-    //Autowired se encarga de 'inyectar' la dependencia userRepo (dependencia como una porción de codigo que voy a poder volver a utilizar)
-    private UserRepo userRepo;
 
     @GetMapping({"/", ""}) //Localhost/users
     public List<User> getUsers(@RequestParam(required = false) List<Long> ids){

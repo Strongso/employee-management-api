@@ -1,7 +1,9 @@
 package com.example.cidenet.Cidenet.entities;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 public class Employee {
 
     @Id
