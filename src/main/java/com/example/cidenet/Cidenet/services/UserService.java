@@ -45,6 +45,11 @@ public class UserService {
         }
     }
 
+    public List<User> getUsers(List<Long> ids) {
+        System.out.println("console log: " + userRepo.findAllById(ids));
+        return userRepo.findAllById(ids);
+    }
+
     @Transactional
     public void modifyUsernameById(String username, Long id) throws MyException {
         validateNull(username);

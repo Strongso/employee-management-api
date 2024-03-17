@@ -5,41 +5,59 @@ import com.example.cidenet.Cidenet.exceptions.MyException;
 import com.example.cidenet.Cidenet.repo.UserRepo;
 import com.example.cidenet.Cidenet.services.EmployeeService;
 import com.example.cidenet.Cidenet.services.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/user") //Localhost/user
+@RequestMapping("/users") //Localhost/users
 public class UserController {
 
     @Autowired
-    private Environment environment;
-
-    @Autowired
     UserService userService;
-    @Autowired
-    EmployeeService employeeService;
 
     @Autowired
     //Autowired se encarga de 'inyectar' la dependencia userRepo (dependencia como una porción de codigo que voy a poder volver a utilizar)
     private UserRepo userRepo;
 
-    @GetMapping({"/", ""}) //Localhost/user
-    public String userPage() {
-        userService.createUser("Username", "pass123");
-        return ("user_main_page.html");
+    @GetMapping({"/", ""}) //Localhost/users
+    public List<User> getUsers(@RequestParam(required = false) List<Long> ids){
+
+        try{
+            if (ids==null || ids.isEmpty()){
+                return userService.getUsers();
+            }else {
+                return userService.getUsers(ids);
+            }
+        }catch(Exception e){
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, "Error id is not a number", e);
+            System.out.println("The ids were not Longs");
+            return null;
+
+        }
 
     }
+    @PostMapping({"/",""})
+    public String createUser(@RequestBody String body){
 
-    @GetMapping("/users") //Localhost/user/users
-    public List<User> getUsers() {
-        return userService.getUsers();
+        try{
+            JSONObject object = new JSONObject(body);
+            System.out.println(object.getString("name"));
+            return object.getString("name");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return (e.getMessage() + " Está borracho mi fax");
+        }
+
+
     }
 
 
@@ -67,21 +85,6 @@ public class UserController {
         return "Admin Page";
     }
 
-    @GetMapping("/admin/create-employee") //Localhost/user/admin/...
-    public String adminCreateEmployee() {
-        return "Created Employee. ";
-
-    }
-
-    @GetMapping("/admin/modify-employee")
-    public String adminModifyEmployee() {
-        return "Admin Modifies employee";
-    }
-
-    @GetMapping("/admin/delete-employee")
-    public String adminDeleteEmployee() {
-        return "Admin deletes employee";
-    }
 
 }
 

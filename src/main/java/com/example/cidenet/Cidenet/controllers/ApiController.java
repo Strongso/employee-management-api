@@ -14,6 +14,11 @@ public class ApiController {
             return "index.html";
         }
 
+        @GetMapping("/error")
+        public String exception(){
+            return("Error");
+        }
+
     }
 
 }
