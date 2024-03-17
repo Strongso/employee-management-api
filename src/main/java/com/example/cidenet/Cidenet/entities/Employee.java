@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class Employee {
 
+    //TODO change  generation type to UUID or HASH or smallHASH
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

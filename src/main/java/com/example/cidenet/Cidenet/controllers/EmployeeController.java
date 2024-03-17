@@ -66,5 +66,13 @@ public class EmployeeController {
         return employeeString.toString();
     }
 
+    @DeleteMapping({"/{id}"})
+    public String deleteEmployee(@PathVariable Long id) throws MyException {
+        Employee employee = employeeService.deleteEmployee(id);
+        JSONObject employeeString = new JSONObject(employee);
+        System.out.println(employeeString.toString());
+        return employeeString.toString();
+    }
+
 
 }

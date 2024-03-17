@@ -160,9 +160,16 @@ public class EmployeeService {
             employeeRepo.save(employee);
             return employee;
         }
-        throw new MyException("The username is null or empty");
+        throw new MyException("Id not found");
 
     }
-
-
+    public Employee deleteEmployee(Long id) throws MyException {
+        Optional<Employee> employeeToDelete = employeeRepo.findById(id);
+        if (employeeToDelete.isPresent()){
+            Employee  employee = employeeToDelete.get();
+            employeeRepo.delete(employee);
+            return employee;
+        }
+        throw new MyException("Id not found");
+    }
 }
