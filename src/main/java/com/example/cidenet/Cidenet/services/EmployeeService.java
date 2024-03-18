@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 
@@ -29,9 +33,13 @@ public class EmployeeService {
                                String secondName,
                                String country,
                                String idType,
-                               String idNumber) throws MyException {
+                               String idNumber,
+                                   String area) throws MyException {
 
         Employee employee = new Employee();
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         validateName(firstName);
         validateName(lastName);
@@ -47,6 +55,12 @@ public class EmployeeService {
         employee.setIdType(idType);
         employee.setIdNumber(idNumber);
         employee.setEmail(generateEmail(firstName,lastName,country));
+        employee.setArea(area);
+
+        employee.setAdmissionDate(LocalDate.now().format(dateFormatter));
+        employee.setRegistryDate(LocalDateTime.now().format(dateTimeFormatter));
+
+
 
         return employeeRepo.save(employee);
 

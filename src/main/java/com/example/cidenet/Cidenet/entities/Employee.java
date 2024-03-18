@@ -1,6 +1,11 @@
 package com.example.cidenet.Cidenet.entities;
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @DynamicUpdate
@@ -27,6 +32,15 @@ public class Employee {
     private String idNumber;
     @Column
     private String email;
+    @Column
+    private String admissionDate;
+    @Column
+    private String area;
+    @Column
+    private final Boolean active = true;
+    @Column
+    private String registryDate;
+
 
     //Constructor
     public Employee() {
@@ -103,6 +117,30 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(String admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getRegistryDate() {
+        return registryDate;
+    }
+
+    public void setRegistryDate(String registryDate) {
+        this.registryDate = registryDate;
     }
 }
 
