@@ -42,6 +42,7 @@ public class EmployeeController {
             Employee employee = employeeService.createEmployee(lastName, secondLastName, firstName, secondName, country, idType, idNumber,area,admissionDate);
             JSONObject employeeString = new JSONObject(employee);
             System.out.println(employeeString.toString());
+
             return employeeString.toString();
 
 

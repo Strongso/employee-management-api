@@ -78,7 +78,7 @@ public class EmployeeService {
         if (dateToValidate.isAfter(LocalDate.now())){
             throw new MyException("The date cannot be grater than the current date.");
         }else if (dateToValidate.isBefore(LocalDate.now().minusMonths(1))){
-            throw new MyException("The date cannot be older than 1 month. ");
+            throw new MyException("The date cannot be older than 1 month.");
         }
 
     }
