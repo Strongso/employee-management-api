@@ -6,6 +6,7 @@ import com.example.cidenet.Cidenet.entities.User;
 import com.example.cidenet.Cidenet.exceptions.MyException;
 import com.example.cidenet.Cidenet.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
+
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("ddMMyyyy");
 
     @Autowired
     private EmployeeRepo employeeRepo;
@@ -34,18 +39,20 @@ public class EmployeeService {
                                String country,
                                String idType,
                                String idNumber,
-                                   String area) throws MyException {
+                                   String area,
+                                   String admissionDate) throws MyException {
 
         Employee employee = new Employee();
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate admissionDateFormatted = LocalDate.parse(admissionDate, dateFormatter);
 
         validateName(firstName);
         validateName(lastName);
         validateName(secondLastName);
         validateSecondName(secondName);
         validateIdNumber(idNumber);
+        validateAdmissionDate(admissionDate);
 
         employee.setLastName(lastName);
         employee.setSecondLastName(secondLastName);
@@ -56,8 +63,7 @@ public class EmployeeService {
         employee.setIdNumber(idNumber);
         employee.setEmail(generateEmail(firstName,lastName,country));
         employee.setArea(area);
-
-        employee.setAdmissionDate(LocalDate.now().format(dateFormatter));
+        employee.setAdmissionDate(admissionDateFormatted.format(dateFormatter));
         employee.setRegistryDate(LocalDateTime.now().format(dateTimeFormatter));
 
 
@@ -65,6 +71,16 @@ public class EmployeeService {
         return employeeRepo.save(employee);
 
         // try generateEmail(employee.getId());
+    }
+
+    private void validateAdmissionDate(String admissionDate) throws MyException {
+        LocalDate dateToValidate = LocalDate.parse(admissionDate, dateFormatter);
+        if (dateToValidate.isAfter(LocalDate.now())){
+            throw new MyException("The date cannot be grater than the current date.");
+        }else if (dateToValidate.isBefore(LocalDate.now().minusMonths(1))){
+            throw new MyException("The date cannot be older than 1 month. ");
+        }
+
     }
 
 

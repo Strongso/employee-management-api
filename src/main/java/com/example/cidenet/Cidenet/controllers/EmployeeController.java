@@ -37,8 +37,9 @@ public class EmployeeController {
             String idType = object.getString("idType");
             String idNumber = object.getString("idNumber");
             String area = object.getString("area");
+            String admissionDate = object.getString("admissionDate");
 
-            Employee employee = employeeService.createEmployee(lastName, secondLastName, firstName, secondName, country, idType, idNumber,area);
+            Employee employee = employeeService.createEmployee(lastName, secondLastName, firstName, secondName, country, idType, idNumber,area,admissionDate);
             JSONObject employeeString = new JSONObject(employee);
             System.out.println(employeeString.toString());
             return employeeString.toString();
