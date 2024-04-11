@@ -3,10 +3,8 @@ package com.example.cidenet.Cidenet.controllers;
 import com.example.cidenet.Cidenet.entities.Employee;
 import com.example.cidenet.Cidenet.exceptions.MyException;
 import com.example.cidenet.Cidenet.services.EmployeeService;
-import com.example.cidenet.Cidenet.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +16,13 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping({"/", ""})
+    @GetMapping({ "/", "" })
     public List<Employee> getEmployees() {
 
         return null;
     }
 
-    @PostMapping({"/", ""})
+    @PostMapping({ "/", "" })
     public String createEmployee(@RequestBody String body) {
 
         try {
@@ -39,12 +37,12 @@ public class EmployeeController {
             String area = object.getString("area");
             String admissionDate = object.getString("admissionDate");
 
-            Employee employee = employeeService.createEmployee(lastName, secondLastName, firstName, secondName, country, idType, idNumber,area,admissionDate);
+            Employee employee = employeeService.createEmployee(lastName, secondLastName, firstName, secondName, country,
+                    idType, idNumber, area, admissionDate);
             JSONObject employeeString = new JSONObject(employee);
             System.out.println(employeeString.toString());
 
             return employeeString.toString();
-
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -52,8 +50,8 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping({"/{id}"})
-    public String updateEmployee(@RequestBody String body, @PathVariable Long id ) throws MyException {
+    @PutMapping({ "/{id}" })
+    public String updateEmployee(@RequestBody String body, @PathVariable Long id) throws MyException {
         JSONObject object = new JSONObject(body);
         String lastName = object.getString("lastName").toUpperCase();
         String secondLastName = object.getString("secondLastName").toUpperCase();
@@ -63,19 +61,19 @@ public class EmployeeController {
         String idType = object.getString("idType");
         String idNumber = object.getString("idNumber");
 
-        Employee employee = employeeService.updateEmployee(id, lastName, secondLastName, firstName, secondName, country, idType, idNumber);
+        Employee employee = employeeService.updateEmployee(id, lastName, secondLastName, firstName, secondName, country,
+                idType, idNumber);
         JSONObject employeeString = new JSONObject(employee);
         System.out.println(employeeString.toString());
         return employeeString.toString();
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping({ "/{id}" })
     public String deleteEmployee(@PathVariable Long id) throws MyException {
         Employee employee = employeeService.deleteEmployee(id);
         JSONObject employeeString = new JSONObject(employee);
         System.out.println(employeeString.toString());
         return employeeString.toString();
     }
-
 
 }

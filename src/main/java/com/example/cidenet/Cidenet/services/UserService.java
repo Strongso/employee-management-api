@@ -6,7 +6,6 @@ import com.example.cidenet.Cidenet.exceptions.MyException;
 import com.example.cidenet.Cidenet.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,8 +26,9 @@ public class UserService {
 
     public UserService() {
     }
-    //Transactional indica que el sgte metodo es transaccional, si ocurre un error mientras se está ejecutando, automaticamente
-    //se hace un rollback y no se modifica la base de datos.
+    // Transactional indica que el sgte metodo es transaccional, si ocurre un error
+    // mientras se está ejecutando, automaticamente
+    // se hace un rollback y no se modifica la base de datos.
 
     @Transactional
     public void createUser(String username, String password) {
@@ -96,5 +96,5 @@ public class UserService {
     }
 }
 
-
-// Hasta ahora modificar ususarios funciona, seguiríamos con las demás acciones del CRUD de usuario y luego pasaríamos a los de Employee.
+// Hasta ahora modificar ususarios funciona, seguiríamos con las demás acciones
+// del CRUD de usuario y luego pasaríamos a los de Employee.

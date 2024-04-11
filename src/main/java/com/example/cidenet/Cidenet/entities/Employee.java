@@ -3,15 +3,11 @@ package com.example.cidenet.Cidenet.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 @Entity
 @DynamicUpdate
 public class Employee {
 
-    //TODO change  generation type to UUID or HASH or smallHASH
+    // TODO change generation type to UUID or HASH or smallHASH
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -41,12 +37,11 @@ public class Employee {
     @Column
     private String registryDate;
 
-
-    //Constructor
+    // Constructor
     public Employee() {
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public long getId() {
         return id;
     }
@@ -143,4 +138,3 @@ public class Employee {
         this.registryDate = registryDate;
     }
 }
-
