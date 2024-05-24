@@ -137,4 +137,12 @@ public class Employee {
     public void setRegistryDate(String registryDate) {
         this.registryDate = registryDate;
     }
+
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", firstName=" + firstName + ", secondName=" + secondName + ", lastName="
+                + lastName + ", secondLastName=" + secondLastName + ", country=" + country + ", idType=" + idType
+                + ", idNumber=" + idNumber + ", email=" + email + ", admissionDate=" + admissionDate + ", area=" + area
+                + ", active=" + active + ", registryDate=" + registryDate + "]";
+    }
 }

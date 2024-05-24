@@ -18,8 +18,26 @@ public class EmployeeController {
 
     @GetMapping({ "/", "" })
     public List<Employee> getEmployees() {
-
+        // TEST REMEMBER TO DELETE
+        List<Employee> employees = employeeService.getEmployees();
+        for (Employee employee : employees) {
+            System.out.println(employee.toString());
+        }
         return null;
+        // TEST REMEMBER TO DELETE
+    }
+
+    @GetMapping({ "/{id}" })
+    public String getEmployee(@PathVariable Long id) {
+        Employee employee;
+        try {
+            employee = employeeService.getEmployeeById(id);
+            return employee.toString();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return (e.getMessage() + " Está borracho mi fax");
+        }
+
     }
 
     @PostMapping({ "/", "" })
@@ -70,10 +88,17 @@ public class EmployeeController {
 
     @DeleteMapping({ "/{id}" })
     public String deleteEmployee(@PathVariable Long id) throws MyException {
-        Employee employee = employeeService.deleteEmployee(id);
-        JSONObject employeeString = new JSONObject(employee);
-        System.out.println(employeeString.toString());
-        return employeeString.toString();
+
+        try {
+            Employee employee = employeeService.deleteEmployee(id);
+            JSONObject employeeString = new JSONObject(employee);
+            System.out.println(employeeString.toString());
+            return employeeString.toString();
+
+        } catch (MyException e) {
+            System.out.println("estamos aqui aaaaaaa");
+            return (e.getMessage() + " Está borracho mi fax");
+        }
     }
 
 }

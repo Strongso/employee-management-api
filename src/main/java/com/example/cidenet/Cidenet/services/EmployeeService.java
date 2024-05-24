@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,7 +60,6 @@ public class EmployeeService {
 
         return employeeRepo.save(employee);
 
-        // try generateEmail(employee.getId());
     }
 
     private void validateAdmissionDate(String admissionDate) throws MyException {
@@ -96,12 +96,14 @@ public class EmployeeService {
     public void validateName(String name) throws MyException {
 
         validateNull(name);
+        name = name.toUpperCase();
         char[] nameArray = name.toCharArray();
 
         for (char character : nameArray) {
 
             // Throw error if any of the characters is outside the A-Z alphabet (not
             // including Ñ)
+            // Preguntarle al negro por como implementar un formato de texto en esta parte.
             if (!(character >= 'A' && character <= 'Z')) {
                 throw new MyException("The name contains invalid characters");
 
@@ -113,7 +115,9 @@ public class EmployeeService {
     }
 
     public void validateSecondName(String name) throws MyException {
+
         validateNull(name);
+        name = name.toUpperCase();
         char[] nameArray = name.toCharArray();
 
         for (char character : nameArray) {
@@ -195,5 +199,19 @@ public class EmployeeService {
             return employee;
         }
         throw new MyException("Id not found");
+    }
+
+    public List<Employee> getEmployees() {
+        List<Employee> employees = employeeRepo.findAll();
+        return employees;
+    }
+
+    public Employee getEmployeeById(Long id) throws MyException {
+        Optional<Employee> employeeToGet = employeeRepo.findById(id);
+        if (employeeToGet.isPresent()) {
+            Employee employee = employeeToGet.get();
+            return employee;
+        }
+        throw new MyException("Could not get Employee - Id not found");
     }
 }

@@ -14,7 +14,7 @@ public class RunTests {
 
     public void run() {
 
-        System.out.println(employeeService.generateEmail("SANDRO", "ALEXANDRO", "Colombia"));
+        // for testing purposes
 
     }
 }
